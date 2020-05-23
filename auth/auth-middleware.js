@@ -60,13 +60,14 @@ function createToken(user){
       sub: user.id,
       name: user.name,
       username: user.email,
-      cohort: user.dept_id,
+      cohort: user.cohort,
       student: user.student,
-      helpter: user.helper
+      helper: user.helper
   };
   const options = {
       expiresIn: '24h'
   }
+  console.log(payload)
   return jwt.sign(payload, secrets.jwtSecret, options)
 }
 
