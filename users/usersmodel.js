@@ -1,5 +1,11 @@
 const db = require('../data/dbConfig.js');
 
+
+// get all users
+function getAll(){
+    return db('users')
+}
+
 // find a user by ID
 function findById(id){
     return db('users')
@@ -29,5 +35,6 @@ function findUsersBy(filter){
 module.exports={
     add,
     findById,
-    findUsersBy
+    findUsersBy,
+    getAll
 }
