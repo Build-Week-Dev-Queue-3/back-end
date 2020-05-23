@@ -6,7 +6,7 @@ const Tickets = require('./tickets-model.js');
 
 // middleware 
 const {verifyToken} = require('../auth/auth-middleware.js');
-const {myTicket} = require('../server/server-middleware.js');
+const {myTicket, isHelper} = require('../server/server-middleware.js');
 router.use(verifyToken)
 
 // endpoints
@@ -82,7 +82,22 @@ router.delete('/:id/user/:uid', myTicket, (req, res) => {
         })
 })
     // as a helper, be able to update the status of the ticket
-
+router.patch('/:id', isHelper, (req, res) => {
+    const id = req.params.id;
+    const status = req.body
+    Tickets.updateStatus(id, status)
+        .then(ticket => {
+            res.status(200).json({
+                data:ticket
+            })
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: 'Error updating status',
+                error
+            })
+        })
+})
     // be ale to get a list of all the tickets
 router.get('/', (req, res) => {
     Tickets.getAll()

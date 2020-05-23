@@ -28,7 +28,9 @@ function findByUserId(id){
 }
 
 function updateTicket(id, ticket){
-    return db('tickets')
+    const ticketed=ticket
+    console.log('ticket', ticketed)
+       return db('tickets')
             .where({id})
             .first()
             .update(ticket, 'id')
@@ -51,11 +53,22 @@ function remove(id){
             })
 }
 
+function updateStatus(id, status){
+    return db('tickets')
+            .where({id})
+            .first()
+            .update(status, 'id')
+            .then(count => {
+                return findById(id)
+            })
+}
+
 module.exports={
     getAll,
     findById,
     add,
     findByUserId,
     updateTicket,
-    remove
+    remove,
+    updateStatus
 }

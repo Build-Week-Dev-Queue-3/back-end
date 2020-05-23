@@ -22,8 +22,19 @@ const myTicket = (req, res, next) => {
     }
 }
 
+const isHelper = (req, res, next) => {
+    const helper = req.jwt.helper
+    if(helper === true){
+        next();
+    } else {
+        res.status(401).json({
+            message: "Must be a helper to change ticket status"
+        })
+    }
+}
 
 module.exports={
     idMatch,
-    myTicket
+    myTicket,
+    isHelper
 }
