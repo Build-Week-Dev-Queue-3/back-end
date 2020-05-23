@@ -21,9 +21,41 @@ async function add(ticket){
     }
 }
 
+function findByUserId(id){
+    return db('tickets')
+            .where('user_id', id)
+
+}
+
+function updateTicket(id, ticket){
+    return db('tickets')
+            .where({id})
+            .first()
+            .update(ticket, 'id')
+            .then(count => {
+                return findById(id)
+            })
+}
+
+function remove(id){
+    return findById(id)
+            .then(ticket => {
+                const delticket = ticket
+                return db('tickets')
+                        .where({id})
+                        .first()
+                        .del()
+                        .then(count => {
+                            return delticket;
+                        })
+            })
+}
 
 module.exports={
     getAll,
     findById,
-    add
+    add,
+    findByUserId,
+    updateTicket,
+    remove
 }
