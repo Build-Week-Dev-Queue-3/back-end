@@ -6,6 +6,7 @@ const helmet = require('helmet');
 // routers
 const AuthRouter = require('../auth/auth-router.js');
 const UsersRouter = require('../users/usersrouter.js');
+const TicketsRouter = require('../tickets/ticketsrouter.js');
 
 // middleware
 
@@ -21,6 +22,8 @@ server.use(express.json());
 server.use('/auth', AuthRouter);
     // users
 server.use('/users', UsersRouter);
+    // tickets
+server.use('/tickets', TicketsRouter)
 
 // GET to ensure server is up
 server.get('/', (req, res) => {

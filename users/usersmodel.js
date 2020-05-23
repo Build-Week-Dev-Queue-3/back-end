@@ -33,7 +33,6 @@ function findUsersBy(filter){
 }
 
 function updateUser(user){
-    console.log('userupdateuser', user)
     return db('users')
             .where({id: user.id})
             .update(user, 'id')

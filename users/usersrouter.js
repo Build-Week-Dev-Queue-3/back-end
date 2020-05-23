@@ -1,5 +1,3 @@
-// be able to update yourself as a user
-
 // set up router
 const router = require('express').Router();
 
@@ -16,7 +14,7 @@ router.use(verifyToken);
 router.get('/', (req, res) => {
     Users.getAll()
         .then(users => {
-            if(users.length == 0){
+            if(users.length === 0){
                 res.status(404).json({
                     message: "There are no users"
                 })
@@ -34,6 +32,7 @@ router.get('/', (req, res) => {
         })
 })
 
+    // be able to update yourself as a user
 router.put('/:id', idMatch, (req, res) => {
     const user = req.body
     const id = req.jwt.sub
