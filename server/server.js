@@ -4,6 +4,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 
 // routers
+const AuthRouter = require('../auth/auth-router.js')
 
 // middleware
 
@@ -15,9 +16,15 @@ server.use(cors());
 server.use(express.json());
 
 // main endpoints
+    // register and login
+server.use('/auth', AuthRouter)
 
-
-
+// GET to ensure server is up
+server.get('/', (req, res) => {
+    res.status(200).json({
+        api: "API is onlilne"
+    })
+})
 
 // export
 module.exports=server;

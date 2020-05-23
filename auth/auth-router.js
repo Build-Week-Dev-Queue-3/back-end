@@ -1,12 +1,12 @@
 // dependency imports
 const router = require('express').Router();
-const bcryptjs = requrie('bcryptjs');
+const bcryptjs = require('bcryptjs');
 
 // model
 const Users = require('../users/usersmodel.js');
 
 // middleware
-const {passHash, validate, createToken, isvalid} = require('./auth-middleware.js');
+const {passHash, validate, createToken, isValid} = require('./auth-middleware.js');
 
 // endpoints
 router.post('/register', validate, (req, res) => {
@@ -29,9 +29,9 @@ router.post('/register', validate, (req, res) => {
   
   router.post('/login', (req, res) => {
     // implement login
-        const {username, password} = req.body;
+        const {email, password} = req.body;
       if(isValid(req.body)){
-          Users.findUsersBy({username})
+          Users.findUsersBy({email})
               .then(([user]) => {
                   console.log([user])
                   if(user && bcryptjs.compareSync(password, user.password)){

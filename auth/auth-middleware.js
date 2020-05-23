@@ -8,7 +8,7 @@ const secrets = require('./secrets.js')
 // checks to make sure that he username and password are present before trying to log in
 function isValid(user){
   return Boolean(
-      user.username && 
+      user.email && 
       user.password && 
       typeof user.password === 'string'
       )
