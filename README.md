@@ -8,7 +8,9 @@
 | register a user         | /auth/register    | POST   |  valid 201 Created |
 | login a user            | /auth/login       | POST   |  valid 200 OK      |
 | can get a list of users | /users            | GET    |  valid 200 OK      |
-| can update a user       | /users/:id        | PUT    |  valid 200 OK
+| can update a user       | /users/:id        | PUT    |  valid 200 OK      |
+| can view all tickets    | /tickets          | GET    |  valid 200 OK      |
+
 
 
 ## REGISTRATION DATA
