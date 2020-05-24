@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Build-Week-Dev-Queue-3/back-end#readme",
   "dependencies": {
+    "@slack/client": "^5.0.2",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",

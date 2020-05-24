@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const AuthRouter = require('../auth/auth-router.js');
 const UsersRouter = require('../users/usersrouter.js');
 const TicketsRouter = require('../tickets/ticketsrouter.js');
+const CommentsRouter = require('../comments/commentsrouter.js')
 
 // middleware
 
@@ -24,6 +25,8 @@ server.use('/auth', AuthRouter);
 server.use('/users', UsersRouter);
     // tickets
 server.use('/tickets', TicketsRouter)
+    // comments
+server.use('/tickets', CommentsRouter)
 
 // GET to ensure server is up
 server.get('/', (req, res) => {
