@@ -27,5 +27,24 @@ function findCommentsForTicket(id){
             
 }
 
+function findById(id){
+    return db('comments')
+            .where({id})
+            .first()
+}
 
-module.exports={addComment};
+function removeComment(id){
+    return findById(id)
+            .then(comment => {
+                const delcomment = comment
+                    return db('comments')
+                            .where({id})
+                            .first()
+                            .del()
+                            .then(count => {
+                                return delcomment;
+                            })
+            })
+}
+
+module.exports={addComment, removeComment, findById, findCommentsForTicket};

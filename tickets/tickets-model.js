@@ -2,9 +2,11 @@ const db = require('../data/dbConfig.js')
 
 // get all tickets
 function getAll(){
-    return db('tickets')
+    return db('tickets as t')
+            .join('statuses as s', 's.id', 't.status_id')
+            .join('users as u', 'u.id', 't.user_id')
+            .select('t.id', 't.user_id', 'u.name', 't.subject', 't.ticket_text', 's.status' )
 }
-
 // find a ticket by ID
 function findById(id){
     return db('tickets as t')
