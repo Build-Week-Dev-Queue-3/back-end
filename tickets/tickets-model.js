@@ -7,9 +7,12 @@ function getAll(){
 
 // find a ticket by ID
 function findById(id){
-    return db('tickets')
-            .where({id})
+    return db('tickets as t')
+            .where('t.id',id)
+            .join('users as u', 'u.id', 't.user_id')
+            .join('statuses as s', 't.status_id', 's.id')
             .first()
+            .select('t.id', "t.user_id", 'u.name', 't.subject', 't.ticket_text', 't.status_id', 's.status' )
 }
 async function add(ticket){
     try{

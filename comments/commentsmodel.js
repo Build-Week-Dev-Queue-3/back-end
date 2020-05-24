@@ -21,6 +21,9 @@ function addComment(comment){
 function findCommentsForTicket(id){
     return db('comments as c')
             .where('c.ticket_id',id)
+            .join('users as u', 'u.id', 'c.commenter_id')
+            .select('c.id', 'c.ticket_id', 'u.name', 'c.comment')
+
             
 }
 

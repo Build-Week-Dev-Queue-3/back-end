@@ -15,6 +15,7 @@
 | can update your ticket    | /tickets/:id/user/:uid | PUT    |  valid 200 OK      |
 | can delete your ticket    | /tickets/:id/user/:uid | DELETE |  valid 200 OK      |
 | helper can update status  | /tickets/:id           | PATCH  |  valid 200 OK      |
+| can add a comment         | /tickets/:id/comments  | POST   |  valid 201 Created |
 
 
 ## REGISTRATION DATA
