@@ -27,8 +27,11 @@ async function add(ticket){
 }
 
 function findByUserId(id){
-    return db('tickets')
-            .where('user_id', id)
+    return db('tickets as t')
+            .where('t.user_id', id)
+            .join('statuses as s','s.id', 't.status_id' )
+            .join('users as u', 't.user_id', 'u.id')
+            .select('t.subject', 't.ticket_text', 'u.name', 's.status')
 
 }
 
