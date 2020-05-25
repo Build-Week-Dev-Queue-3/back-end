@@ -33,7 +33,6 @@ router.post('/register', validate, (req, res) => {
       if(isValid(req.body)){
           Users.findUsersBy({email})
               .then(([user]) => {
-                  console.log([user])
                   if(user && bcryptjs.compareSync(password, user.password)){
                       token = createToken(user)
                       res.status(200).json({
@@ -48,7 +47,6 @@ router.post('/register', validate, (req, res) => {
                   }
               })
               .catch(error => {
-                  console.log(error)
                   res.status(500).json({
                       error,
                       message: error.message
