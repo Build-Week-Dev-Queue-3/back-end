@@ -30,7 +30,7 @@ describe('auth router tests', () => {
                 return supertest(server)
                 .post('/auth/register')
                 .send(user)
-                .expect(500)
+                .expect(400)
             })
         })
     })

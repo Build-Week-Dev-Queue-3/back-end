@@ -13,17 +13,28 @@ router.post('/register', validate, (req, res) => {
     // implement registration
     const user = req.body;
     const newUser = passHash(user)
-    Users.add(newUser)
+    const email = user.email
+    Users.findUsersBy({email})
         .then(user => {
-            res.status(201).json({
-                data: user
-            })
-        })
-        .catch(error => {
-            res.status(500).json({
-                message: "Could not add user at this time, please try again later",
-                error
-            })
+            console.log(user)
+            if(user.length > 0){
+                res.status(400).json({
+                    message: "There is already an account with that email, if yours yours, login instead"
+                })
+            } else {
+                Users.add(newUser)
+                .then(user => {
+                    res.status(201).json({
+                        data: user
+                    })
+                })
+                .catch(error => {
+                    res.status(500).json({
+                        message: "Could not add user at this time, please try again later",
+                        error
+                    })
+                })
+            } 
         })
   });
   
