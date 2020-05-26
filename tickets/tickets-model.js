@@ -1,5 +1,5 @@
 const db = require('../data/dbConfig.js')
-
+const Comments = require('../comments/commentsmodel.js')
 // get all tickets
 function getAll(){
     return db('tickets as t')
@@ -15,6 +15,15 @@ function findById(id){
             .join('statuses as s', 't.status_id', 's.id')
             .first()
             .select('t.id', "t.user_id", 'u.name', 't.subject', 't.ticket_text', 't.status_id', 's.status' )
+            .then(resp => {
+                const ticket = resp
+                console.log(resp)
+                return Comments.findCommentsForTicket(resp.id)
+                .then(comments => {
+                    const fullTicket = {...ticket, comments}
+                    return fullTicket
+                })
+            })
 }
 async function add(ticket){
     try{

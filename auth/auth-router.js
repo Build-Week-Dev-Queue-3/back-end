@@ -16,7 +16,6 @@ router.post('/register', validate, (req, res) => {
     const email = user.email
     Users.findUsersBy({email})
         .then(user => {
-            console.log(user)
             if(user.length > 0){
                 res.status(400).json({
                     message: "There is already an account with that email, if yours yours, login instead"

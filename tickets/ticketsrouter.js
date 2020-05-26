@@ -107,4 +107,12 @@ router.get('/', (req, res) => {
             })
         })
 })
+router.get('/:id', (req, res) => {
+    Tickets.findById(req.params.id)
+    .then(ticket => {
+        res.status(200).json({
+            data: ticket
+        })
+    })
+})
 module.exports=router;

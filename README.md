@@ -70,3 +70,18 @@
 
 #### AXIOS REQUESTS
 - some of the axios requests rely on more than one parameter. if you do not supply all the parameters, you will not be able to complete the request. 
+
+## TESTS PERFORMED
+
+| ENDPOINT               | SUCCESS/ERROR     | EXPECT           | METHOD         | RECEIVED              |
+| :-------------------   | :---------------- | :--------------  | :------------- | :-------------------- |
+|  /                     |  SUCCESS          |  res.status      |  toBe          |  200 OK               |
+|  /                     |  SUCCESS          |  res.body        |  toStrictEqual | {api: "API is onlilne}|
+|  /auth/register        |  SUCCESS          |  res.status      |  toBe          |  200 OK               |
+|  /auth/register        |  ERROR            |  res.status      |  toBe          |  400 BAD REQUEST      |
+|  /auth/register        |  ERROR            |  res.status      |  toBe          |  400 BAD REQUEST      |
+|  /auth/login           |  SUCCESS          |  res.status      |  toBe          |  200 OK               |
+|  /auth/login           |  ERROR            |  res.status      |  toBe          |  400 BAD REQUEST      |
+|  /auth/login           |  ERROR            |  res.status      |  toBe          |  401 UNAUTHORIZED     |
+|  /users                |  SUCCESS          |  res.status      |  toBe          |  200 OK               |
+|  /users                |  SUCCESS          |  res.body.data   |  toHaveLength  |  1                    |
