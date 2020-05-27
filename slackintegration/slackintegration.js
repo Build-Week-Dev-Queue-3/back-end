@@ -10,7 +10,8 @@ router.get('/slack/tickets', (req, res) => {
 
 
 router.post('/slack/tickets', (req, res) => {
-    Slack.addTicket(req.body)
+    const slackmes = {text: req.body.text}
+    Slack.addTicket(slackmes)
     .then(id => {
         res.status(200)
     })
