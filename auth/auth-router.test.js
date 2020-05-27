@@ -6,6 +6,9 @@ const user = {name: "Test", email: "email@email.com", password: "password", coho
 const inValidUser = {name: "Test", password: "password", cohort: "web29"}
 const noUser = {email: "notregistered@email.com", password: "password"}
 afterAll(async () => {
+    await db('comments').truncate()
+    await db('tickets').truncate()
+    await db('statuses').truncate()
     await db('users').truncate()
 })
 describe('auth router tests', () => {
