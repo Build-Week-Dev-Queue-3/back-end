@@ -14,7 +14,7 @@ router.get('/slack/tickets', (req, res) => {
 
 
 router.post('/slack/tickets', urlencodedParser, (req, res) => {
-    const slackmes = {text: req.body.text, user: req.body.user_name}
+    const slackmes = {text: req.body.text}
     Slack.addTicket(slackmes)
     .then(id => {
         res.send({
