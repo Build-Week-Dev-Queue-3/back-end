@@ -10,7 +10,10 @@ router.get('/slack/tickets', (req, res) => {
 
 
 router.post('/slack/tickets', (req, res) => {
-    console.log(req)
+    Slack.addTicket(req.body)
+    .then(id => {
+        res.status(200)
+    })
 })
 
 module.exports=router;
