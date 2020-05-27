@@ -3,6 +3,7 @@ const router = require('express').Router();
 
 // model
 const Comments = require('./commentsmodel.js');
+const Tickets = require('../tickets/tickets-model.js');
 
 // middleware
 const {verifyToken} = require('../auth/auth-middleware.js');
@@ -17,17 +18,29 @@ router.post('/:id/comments', verifyToken, (req, res) => {
     const commenterId = req.jwt.sub;
     const comment = req.body.comment
     const infoToAdd = {ticket_id: ticketId, commenter_id: commenterId, comment: comment}
-    Comments.addComment(infoToAdd)
+    Tickets.findById(ticketId)
         .then(ticket => {
-            res.status(201).json({
-                data: ticket
-            })
+            if(ticket){
+                console.log(ticket)
+                Comments.addComment(infoToAdd)
+                .then(id => {
+                    res.status(201).json({
+                        message: "comment added",
+                        data: id
+                    })
+                })
+            }else{
+                res.status(404).json({
+                    errorMessage: "ticket not found"
+                })
+            }
         })
+
 })
 
 router.delete('/:id/comments/:cid', (req, res) => {
     const commentId = req.params.cid
-    Comments.findById(commentId)
+    Comments.findcById(commentId)
             .then(comment => {
                 const myId = req.jwt.sub;
                 const commenter = comment.commenter_id

@@ -3,10 +3,11 @@ const router = require('express').Router();
 
 // model
 const Tickets = require('./tickets-model.js');
+const Comments = require('../comments/commentsmodel.js');
 
 // middleware 
 const {verifyToken} = require('../auth/auth-middleware.js');
-const {myTicket, isHelper} = require('../server/server-middleware.js');
+const {myTicket, isHelper, getAllTickets} = require('../server/server-middleware.js');
 router.use(verifyToken)
 
 // endpoints
@@ -99,14 +100,41 @@ router.patch('/:id', isHelper, (req, res) => {
         })
 })
     // be ale to get a list of all the tickets
-router.get('/', (req, res) => {
+// router.get('/', (req, res) => {
+//     Tickets.getAll()
+//         .then(tickets => {
+//             tickets.forEach((item, i) => {
+//                 Comments.findCommentsForTicket(item.id)
+//                 .then(resp => {
+//                     const tick = {tickets:tickets[i], comments: resp}
+//                     console.log(tick)
+//                     res.status(200).json({
+//                         tick
+
+//                     })
+//                 })
+//             })
+//         })
+// })
+
+router.get('/', (req, res)=> {
     Tickets.getAll()
-        .then(tickets => {
-            res.status(200).json({
-                data: tickets
-            })
+    .then(tickets => {
+        res.status(200).json({
+            data: tickets
         })
+    })
 })
+// router.get('/',(req, res) => {
+//    const allTickets =  getAllTickets()
+//     .then(resp => {
+//         res.status(200).json({
+//             allTickets
+//         })
+//     })
+// })
+
+
 router.get('/:id', (req, res) => {
     Tickets.findById(req.params.id)
     .then(ticket => {
@@ -115,4 +143,13 @@ router.get('/:id', (req, res) => {
         })
     })
 })
+
+// router.get('/all', (req, res) => {
+//     Tickets.getAllTicketsIncludeComments()
+//     .then(tickets => {
+//         res.status(200).json({
+//             data: tickets
+//         })
+//     })
+// })
 module.exports=router;

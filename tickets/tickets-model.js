@@ -6,18 +6,18 @@ function getAll(){
             .join('statuses as s', 's.id', 't.status_id')
             .join('users as u', 'u.id', 't.user_id')
             .select('t.id', 't.user_id', 'u.name', 't.subject', 't.ticket_text', 's.status' )
+
 }
 // find a ticket by ID
 function findById(id){
     return db('tickets as t')
             .where('t.id',id)
+            .first()
             .join('users as u', 'u.id', 't.user_id')
             .join('statuses as s', 't.status_id', 's.id')
-            .first()
             .select('t.id', "t.user_id", 'u.name', 't.subject', 't.ticket_text', 't.status_id', 's.status' )
             .then(resp => {
                 const ticket = resp
-                console.log(resp)
                 return Comments.findCommentsForTicket(resp.id)
                 .then(comments => {
                     const fullTicket = {...ticket, comments}
@@ -25,6 +25,28 @@ function findById(id){
                 })
             })
 }
+
+// async function getAllTicketsIncludeComments(){
+//     const ticks = []
+//     const comments = await db('tickets as t')
+//             .join('statuses as s', 's.id', 't.status_id')
+//             .join('users as u', 'u.id', 't.user_id')
+//             .select('t.id', 't.user_id', 'u.name', 't.subject', 't.ticket_text', 's.status' )
+//             .then(res => {
+//                 const data = res.data
+//                 console.log(res.data)
+//                 res.data.map(item => {
+//         console.log(item)
+//             const ticket = item
+//             Comments.findCommentsForTicket(ticket.id)
+//             .then(comments => {
+//             const tickWComm = {...ticket, comments}
+//             ticks.push(tickWComm)
+//             })
+//         })
+//     })
+//     return comments
+// }
 async function add(ticket){
     try{
         const [id] = await db('tickets')
@@ -80,6 +102,8 @@ function updateStatus(id, status){
             })
 }
 
+
+
 module.exports={
     getAll,
     findById,
@@ -88,4 +112,5 @@ module.exports={
     updateTicket,
     remove,
     updateStatus
+    // getAllTicketsIncludeComments
 }

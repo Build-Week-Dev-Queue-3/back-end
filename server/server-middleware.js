@@ -1,3 +1,6 @@
+const tickets = require('../tickets/tickets-model.js');
+const comments = require('../comments/commentsmodel.js');
+
 const idMatch = (req, res, next) => {
     const myId = req.jwt.sub
     if(myId == req.params.id){
@@ -33,8 +36,30 @@ const isHelper = (req, res, next) => {
     }
 }
 
+function getAllTickets(){
+    const allTickets = []
+        tickets.getAll()
+        .then(ticks => {
+            ticks.forEach((item, i) => {
+                comments.findCommentsForTicket(item.id)
+                .then(resp => {
+                    const tick = {tickets:ticks, comments: resp}
+                    console.log(tick)
+                    allTickets.push(tick)
+            
+                })
+                return allTickets
+            })
+
+        })
+
+}
+
+
 module.exports={
     idMatch,
     myTicket,
-    isHelper
+    isHelper,
+    getAllTickets
+
 }
