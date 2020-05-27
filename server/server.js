@@ -8,6 +8,7 @@ const AuthRouter = require('../auth/auth-router.js');
 const UsersRouter = require('../users/usersrouter.js');
 const TicketsRouter = require('../tickets/ticketsrouter.js');
 const CommentsRouter = require('../comments/commentsrouter.js')
+const Slack = require('../slackintegration/slackintegration.js')
 
 // middleware
 
@@ -27,6 +28,11 @@ server.use('/users', UsersRouter);
 server.use('/tickets', TicketsRouter)
     // comments
 server.use('/tickets', CommentsRouter)
+
+
+//slack??
+server.use('/', Slack)
+
 
 // GET to ensure server is up
 server.get('/', (req, res) => {
