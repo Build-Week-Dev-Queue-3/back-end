@@ -13,7 +13,10 @@ router.post('/slack/tickets', (req, res) => {
     const slackmes = {text: req.body.text}
     Slack.addTicket(slackmes)
     .then(id => {
-        res.status(200)
+        res.send({
+            response_type: "in_channel",
+            text: "It's 80 degrees right now."
+        })
     })
 })
 
