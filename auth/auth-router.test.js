@@ -3,8 +3,11 @@ const db = require('../data/dbConfig.js');
 const server = require('../server/server.js');
 
 const user = {name: "Test", email: "email@email.com", password: "password", cohort: "web29", student: true}
-const inValidUser = {name: "Test", password: "password", cohort: "web29"}
+const noEmail = {name: "Test", password: "password", cohort: "web29"}
+const noPassword = {name: "Test", email: "password", cohort: "web29"}
+const noCohort = {name: "Test", email: "noCohort@cohort.com",password: "password"}
 const noUser = {email: "notregistered@email.com", password: "password"}
+const noStudentHelper = {name: "Test", email: "notstudent@nothelper.com", password: "password", cohort: "web29", student: false, helper: false }
 afterAll(async () => {
     await db('comments').truncate()
     await db('tickets').truncate()
@@ -26,14 +29,72 @@ describe('auth router tests', () => {
             it('receives error if you dont send full object', () => {
                 return supertest(server)
                 .post('/auth/register')
-                .send(inValidUser)
+                .send(noEmail)
                 .expect(400)
+            })
+            it('receives error if you dont send full object', () => {
+                return supertest(server)
+                .post('/auth/register')
+                .send(noEmail)
+                .then(res => {
+                    expect(res.body.message).toStrictEqual("Please provide a email for the user")
+                })
+            })
+            it('receives error if you dont send full object', () => {
+                return supertest(server)
+                .post('/auth/register')
+                .send(noPassword)
+                .expect(400)
+            })
+            it('receives error if you dont send full object', () => {
+                return supertest(server)
+                .post('/auth/register')
+                .send(noPassword)
+                .then(res => {
+                    expect(res.body.message).toStrictEqual("Please provide a valid password for the user")
+                })
+            })
+            it('receives error if you dont send full object', () => {
+                return supertest(server)
+                .post('/auth/register')
+                .send(noCohort)
+                .expect(400)
+            })
+            it('receives error if you dont send full object', () => {
+                return supertest(server)
+                .post('/auth/register')
+                .send(noCohort)
+                .then(res => {
+                    expect(res.body.message).toStrictEqual("Please provide a cohort for the user")
+                })
+            })
+            it('receives error if you dont send full object', () => {
+                return supertest(server)
+                .post('/auth/register')
+                .send(noStudentHelper)
+                .expect(400)
+            })
+            it('receives error if you dont send full object', () => {
+                return supertest(server)
+                .post('/auth/register')
+                .send(noStudentHelper)
+                .then(res => {
+                    expect(res.body.message).toStrictEqual("Please check if you are a student and/or a helper")
+                })
             })
             it('receives an error if your user is not unique', () => {
                 return supertest(server)
                 .post('/auth/register')
                 .send(user)
                 .expect(400)
+            })
+            it('receives a message telling you to login instead', () => {
+                return supertest(server)
+                .post('/auth/register')
+                .send(user)
+                .then(res => {
+                    expect(res.body.message).toStrictEqual("There is already an account with that email, if yours yours, login instead")
+                })
             })
         })
     })
@@ -45,10 +106,26 @@ describe('auth router tests', () => {
                     .send(user)
                     .expect(200)
             })
+            it('receives a logged in message', () => {
+                return supertest(server)
+                    .post('/auth/login')
+                    .send(user)
+                    .then(res => {
+                        expect(res.body.message).toStrictEqual("Logged in successfully")
+                    })
+            })
+            it('receives a user back after login', () => {
+                return supertest(server)
+                    .post('/auth/login')
+                    .send(user)
+                    .then(res => {
+                        expect(res.body.user).toBeDefined()
+                    })
+            })
             it('gives an error with missing username', () => {
                 return supertest(server)
                     .post('/auth/login')
-                    .send(inValidUser)
+                    .send(noEmail)
                     .expect(400)
             })
             it('gives a 401 if your username doesnt exist', () => {

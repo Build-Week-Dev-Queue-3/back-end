@@ -4,23 +4,26 @@ const server = require('../server/server.js');
 const user={id: 1, name: "Test", email: "email@email.com", password: "password", cohort: "web29", student: true}
 const user2={id: 2, name: "Test", email: "memail@email.com", password: "password", cohort: "web29", student: true}
 const updateuser2 = {id: 2, name: "Updated Test", email: "memail@email.com", password: "password", cohort: "web29", student: true}
+let token;
+
 afterAll(async () => {
     await db('comments').truncate()
     await db('tickets').truncate()
     await db('statuses').truncate()
     await db('users').truncate()
     await supertest(server)
-    .post('/auth/register')
-    .send(user2)
-    .then(resp => {
-        expect(resp.status).toBe(201)
-        return supertest(server)
+        .post('/auth/register')
+        .send(user2)
+        .then(resp => {
+            expect(resp.status).toBe(201)
+        })
+    await supertest(server)
         .post('/auth/login')
         .send(user2)
         .then(response => {
-            const token = response.body.token
+             let token = response.body.token
+             return token
         })
-    })
 
 })
 describe('userrouter tests', () => {
@@ -40,41 +43,97 @@ describe('userrouter tests', () => {
                 .post('/auth/login')
                 .send(user)
                 .then(res => {
-                    const token = res.body.token
+                    const token2 = res.body.token
                     return supertest(server)
                     .get('/users')
-                    .set('authorization', token)
+                    .set('authorization', token2)
+                    .then(res => {
+                        expect(res.status).toBe(200)
+                    })
+                })
+            })
+            it('sends users back', () => {
+                return supertest(server)
+                .post('/auth/login')
+                .send(user)
+                .then(res => {
+                    const token2 = res.body.token
+                    return supertest(server)
+                    .get('/users')
+                    .set('authorization', token2)
                     .then(res => {
                         const length= res.body.data.length
-                        expect(res.status).toBe(200)
                         expect(res.body.data).toHaveLength(length)
                     })
+                })
+            })
+            it('throws 401 if no token sent', () => {
+                return supertest(server)
+                .get('/users')
+                .then(res => {
+                    expect(res.status).toBe(401)
+                })
+            })
+            it('sends message back if no token sent', () => {
+                return supertest(server)
+                .get('/users')
+                .then(res => {
+                    expect(res.body.message).toBeDefined()
+                })
+            })
+            it('sends message back if no token sent', () => {
+                return supertest(server)
+                .get('/users')
+                .then(res => {
+                    expect(res.body.message).toStrictEqual("Please provide the correct authorization")
                 })
             })
         })
     })
     describe('ability to update your profile', () => {
         describe('only lets you update your profile', () => {
-            it('registers you and logs you in', () => {
-                return supertest(server)
-                .post('/auth/register')
+            it('lets you update your profile', async () => {
+                await supertest(server)
+                .post('/auth/login')
                 .send(user2)
-                .then(resp => {
-                    expect(resp.status).toBe(201)
+                .then(response => {
+                     let token = response.body.token
+                     return supertest(server)
+                     .put(`/users/${updateuser2.id}`)
+                     .set('authorization', token)
+                     .send(updateuser2)
+                     .expect(200)
+                })
+            })
+            it('throws an error when its not your profile', async () => {
+                await supertest(server)
+                .post('/auth/login')
+                .send(user)
+                .then(response => {
+                    let token = response.body.token
                     return supertest(server)
-                    .post('/auth/login')
-                    .send(user2)
-                    .then(response => {
-                        const token = response.body.token
+                    .put(`/users/${updateuser2.id}`)
+                    .set('authorization', token)
+                    .send(updateuser2)
+                    .then(response =>{
+                        expect(response.status).toBe(401)
                     })
                 })
             })
-            it('lets you update your profile', () => {
-                return supertest(server)
-                .put(`/users/${updateuser2.id}`)
-                .set('authorization', token)
-                .send(updateuser2)
-                .expect(200)
+            it('throw you can only update your own profile', async () => {
+                await supertest(server)
+                .post('/auth/login')
+                .send(user)
+                .then(response => {
+                    let token = response.body.token
+                    return supertest(server)
+                    .put(`/users/${updateuser2.id}`)
+                    .set('authorization', token)
+                    .send(updateuser2)
+                    .then(response =>{
+                        expect(response.body.message).toStrictEqual("You can only update your own user profile")
+                    })
+                })
             })
         })
     })
