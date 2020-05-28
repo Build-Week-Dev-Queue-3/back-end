@@ -1,19 +1,18 @@
 const supertest = require('supertest');
 const db = require('../data/dbConfig.js');
 const server = require('../server/server.js');
-
-const user = {name: "Test", email: "email@email.com", password: "password", cohort: "web29", student: true}
+// afterAll(async () => {
+//     await db.migrate.rollback()
+//     .then(() => db.migrate.latest())
+//     .then(() => db.seed.run())
+// })
+const user = {id: 10, name: "Test", email: "emailm@email.com", password: "password", cohort: "web29", student: true}
 const noEmail = {name: "Test", password: "password", cohort: "web29"}
 const noPassword = {name: "Test", email: "password", cohort: "web29"}
 const noCohort = {name: "Test", email: "noCohort@cohort.com",password: "password"}
 const noUser = {email: "notregistered@email.com", password: "password"}
 const noStudentHelper = {name: "Test", email: "notstudent@nothelper.com", password: "password", cohort: "web29", student: false, helper: false }
-afterAll(async () => {
-    await db('comments').truncate()
-    await db('tickets').truncate()
-    await db('statuses').truncate()
-    await db('users').truncate()
-})
+
 describe('auth router tests', () => {
     it('can run tests', () => {
         expect(true).toBeTruthy();

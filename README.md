@@ -2,14 +2,14 @@
 # DevDeskQueue
 ## Endpoints
 
-| Action                    | URL                        | Method | Response           | Tests    |
-| :------------------------ | :------------------------- | :----- | :----------------- | :------- |
-| Can reach API             | /                          | GET    |  valid 200 OK      | COMPLETE |
-| register a user           | /auth/register             | POST   |  valid 201 Created | COMPLETE |
-| login a user              | /auth/login                | POST   |  valid 200 OK      | COMPLETE |
-| can get a list of users   | /users                     | GET    |  valid 200 OK      | COMPLETE |
-| can update a user         | /users/:id                 | PUT    |  valid 200 OK      | COMPLETE |
-| can view all tickets      | /tickets                   | GET    |  valid 200 OK      ||
+| Action                    | URL                        | Method | Response           | Tests    | POSTMAN  |
+| :------------------------ | :------------------------- | :----- | :----------------- | :------- |:-------- |
+| Can reach API             | /                          | GET    |  valid 200 OK      | COMPLETE | COMPLETE |
+| register a user           | /auth/register             | POST   |  valid 201 Created | COMPLETE | COMPLETE |
+| login a user              | /auth/login                | POST   |  valid 200 OK      | COMPLETE | COMPLETE |
+| can get a list of users   | /users                     | GET    |  valid 200 OK      | COMPLETE | COMPLETE |
+| can update a user         | /users/:id                 | PUT    |  valid 200 OK      | COMPLETE | COMPLETE |
+| can view all tickets      | /tickets                   | GET    |  valid 200 OK      | COMPLETE | COMPLETE |
 | can view ticket by ID     | /tickets/:id               | GET    |  valid 200 OK      ||
 | can add a ticket          | /tickets                   | POST   |  valid 201 Created ||
 | can view your tickets     | /tickets/users/:id         | GET    |  valid 200 OK      ||

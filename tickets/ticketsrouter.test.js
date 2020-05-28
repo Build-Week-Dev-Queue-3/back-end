@@ -1,14 +1,22 @@
 const supertest = require('supertest');
 const db = require('../data/dbConfig.js');
 const server = require('../server/server.js');
-const user={id: 1, name: "Test", email: "email@email.com", password: "password", cohort: "web29", student: true}
-afterAll(async () => {
-    await db('comments').truncate()
-    await db('tickets').truncate()
-    await db('statuses').truncate()
-    await db('users').truncate()
-})
-
+const user={id: 10, name: "Test", email: "emailmm@email.com", password: "password", cohort: "web29", student: true}
+const validTicket={subject: "This is the testing ticket", ticket_text: "testing ticket text"}
+const tickNoSub={id: 10, ticket_text: "testing ticket text"}
+const tickNoText={id: 10, subject: "this is teh testing ticket"} 
+// // afterAll(async () => {
+// //     await db('slack').truncate()
+// //     await db('comments').truncate()
+// //     await db('tickets').truncate()
+// //     await db('statuses').truncate()
+// //     await db('users').truncate()
+// // })
+// afterAll(async () => {
+//     await db.migrate.rollback()
+//     .then(() => db.migrate.latest())
+//     .then(() => db.seed.run())
+// })
 describe('tickets router tests', () => {
     it('can run tests', () => {
         expect(true).toBeTruthy();
@@ -68,6 +76,27 @@ describe('tickets router tests', () => {
             })
         })
         
-    } )
+    })
+    describe('you can add a ticket', () => {
+        it("lets you add a ticket", () => {
+            return supertest(server)
+                .post('/auth/register')
+                .send(user)
+                .then(resp => {
+                    return supertest(server)
+                    .post('/auth/login')
+                    .send(user)
+                    .then(resp => {
+                        let token = resp.body.token
+                        return supertest(server)
+                            .post('/tickets')
+                            .set('authorization', token)
+                            .then(resp => {
+                                expect(resp.status).toBe(201)
+                            })
+                    })
+                })
+        })
+    })
 
 })

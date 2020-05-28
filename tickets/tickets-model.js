@@ -48,13 +48,9 @@ function findById(id){
 //     return comments
 // }
 async function add(ticket){
-    try{
-        const [id] = await db('tickets')
-                            .insert(ticket, "id")
-                            return findById(id)
-    } catch(error){
-        throw error;
-    }
+await db('tickets')
+        .insert(ticket, "id")
+                            // return findById(id)
 }
 
 function findByUserId(id){
