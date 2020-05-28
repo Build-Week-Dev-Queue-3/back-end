@@ -2,22 +2,22 @@
 # DevDeskQueue
 ## Endpoints
 
-| Action                    | URL                        | Method | Response           |
-| :------------------------ | :------------------------- | :----- | :----------------- |
-| Can reach API             | /                          | GET    |  valid 200 OK      |
-| register a user           | /auth/register             | POST   |  valid 201 Created |
-| login a user              | /auth/login                | POST   |  valid 200 OK      |
-| can get a list of users   | /users                     | GET    |  valid 200 OK      |
-| can update a user         | /users/:id                 | PUT    |  valid 200 OK      |
-| can view all tickets      | /tickets                   | GET    |  valid 200 OK      |
-| can view ticket by ID     | /tickets/:id               | GET    |  valid 200 OK
-| can add a ticket          | /tickets                   | POST   |  valid 201 Created |
-| can view your tickets     | /tickets/users/:id         | GET    |  valid 200 OK      |
-| can update your ticket    | /tickets/:id/user/:uid     | PUT    |  valid 200 OK      |
-| can delete your ticket    | /tickets/:id/user/:uid     | DELETE |  valid 200 OK      |
-| helper can update status  | /tickets/:id               | PATCH  |  valid 200 OK      |
-| can add a comment         | /tickets/:id/comments      | POST   |  valid 201 Created |
-| can delete your comment   | /tickets/:id/comments/:cid | DELETE |  valid 200 OK      |
+| Action                    | URL                        | Method | Response           | Tests    |
+| :------------------------ | :------------------------- | :----- | :----------------- | :------- |
+| Can reach API             | /                          | GET    |  valid 200 OK      | COMPLETE |
+| register a user           | /auth/register             | POST   |  valid 201 Created | COMPLETE |
+| login a user              | /auth/login                | POST   |  valid 200 OK      | COMPLETE |
+| can get a list of users   | /users                     | GET    |  valid 200 OK      | COMPLETE |
+| can update a user         | /users/:id                 | PUT    |  valid 200 OK      | COMPLETE |
+| can view all tickets      | /tickets                   | GET    |  valid 200 OK      ||
+| can view ticket by ID     | /tickets/:id               | GET    |  valid 200 OK      ||
+| can add a ticket          | /tickets                   | POST   |  valid 201 Created ||
+| can view your tickets     | /tickets/users/:id         | GET    |  valid 200 OK      ||
+| can update your ticket    | /tickets/:id/user/:uid     | PUT    |  valid 200 OK      ||
+| can delete your ticket    | /tickets/:id/user/:uid     | DELETE |  valid 200 OK      ||
+| helper can update status  | /tickets/:id               | PATCH  |  valid 200 OK      ||
+| can add a comment         | /tickets/:id/comments      | POST   |  valid 201 Created ||
+| can delete your comment   | /tickets/:id/comments/:cid | DELETE |  valid 200 OK      ||
  
 
 ## REGISTRATION DATA
@@ -72,17 +72,3 @@
 #### AXIOS REQUESTS
 - some of the axios requests rely on more than one parameter. if you do not supply all the parameters, you will not be able to complete the request. 
 
-## TESTS PERFORMED
-
-| ENDPOINT               | SUCCESS/ERROR     | EXPECT           | METHOD         | RECEIVED              |
-| :-------------------   | :---------------- | :--------------  | :------------- | :-------------------- |
-|  /                     |  SUCCESS          |  res.status      |  toBe          |  200 OK               |
-|  /                     |  SUCCESS          |  res.body        |  toStrictEqual | {api: "API is onlilne}|
-|  /auth/register        |  SUCCESS          |  res.status      |  toBe          |  200 OK               |
-|  /auth/register        |  ERROR            |  res.status      |  toBe          |  400 BAD REQUEST      |
-|  /auth/register        |  ERROR            |  res.status      |  toBe          |  400 BAD REQUEST      |
-|  /auth/login           |  SUCCESS          |  res.status      |  toBe          |  200 OK               |
-|  /auth/login           |  ERROR            |  res.status      |  toBe          |  400 BAD REQUEST      |
-|  /auth/login           |  ERROR            |  res.status      |  toBe          |  401 UNAUTHORIZED     |
-|  /users                |  SUCCESS          |  res.status      |  toBe          |  200 OK               |
-|  /users                |  SUCCESS          |  res.body.data   |  toHaveLength  |  1                    |

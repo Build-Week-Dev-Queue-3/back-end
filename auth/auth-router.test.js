@@ -26,13 +26,13 @@ describe('auth router tests', () => {
                 .send(user)
                 .expect(201)
             })
-            it('receives error if you dont send full object', () => {
+            it('receives error if you dont send email', () => {
                 return supertest(server)
                 .post('/auth/register')
                 .send(noEmail)
                 .expect(400)
             })
-            it('receives error if you dont send full object', () => {
+            it('receives error message if you dont send email', () => {
                 return supertest(server)
                 .post('/auth/register')
                 .send(noEmail)
@@ -40,13 +40,13 @@ describe('auth router tests', () => {
                     expect(res.body.message).toStrictEqual("Please provide a email for the user")
                 })
             })
-            it('receives error if you dont send full object', () => {
+            it('receives error if you dont send password', () => {
                 return supertest(server)
                 .post('/auth/register')
                 .send(noPassword)
                 .expect(400)
             })
-            it('receives error if you dont send full object', () => {
+            it('receives error message if you dont send password', () => {
                 return supertest(server)
                 .post('/auth/register')
                 .send(noPassword)
@@ -54,13 +54,13 @@ describe('auth router tests', () => {
                     expect(res.body.message).toStrictEqual("Please provide a valid password for the user")
                 })
             })
-            it('receives error if you dont send full object', () => {
+            it('receives error if you dont send cohort', () => {
                 return supertest(server)
                 .post('/auth/register')
                 .send(noCohort)
                 .expect(400)
             })
-            it('receives error if you dont send full object', () => {
+            it('receives error message if you dont send cohort', () => {
                 return supertest(server)
                 .post('/auth/register')
                 .send(noCohort)
@@ -68,13 +68,13 @@ describe('auth router tests', () => {
                     expect(res.body.message).toStrictEqual("Please provide a cohort for the user")
                 })
             })
-            it('receives error if you dont send full object', () => {
+            it('receives error if you dont send student or helper', () => {
                 return supertest(server)
                 .post('/auth/register')
                 .send(noStudentHelper)
                 .expect(400)
             })
-            it('receives error if you dont send full object', () => {
+            it('receives error message if you dont send student or helper', () => {
                 return supertest(server)
                 .post('/auth/register')
                 .send(noStudentHelper)
