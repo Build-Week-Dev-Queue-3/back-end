@@ -25,6 +25,10 @@ exports.up = function(knex) {
             .string('ticket_text')
             .notNullable()
         tickets
+            .string('tried')
+        tickets
+            .string('category')
+        tickets
             .integer('status_id')
             .unsigned()
             .defaultTo(1)
@@ -32,6 +36,7 @@ exports.up = function(knex) {
             .inTable('statuses')
             .onUpdate('CASCADE')
             .onDelete('RESTRICT')
+
     })
     .createTable('comments', comments => {
         comments.increments()
