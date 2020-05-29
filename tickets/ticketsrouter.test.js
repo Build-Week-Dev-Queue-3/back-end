@@ -12,7 +12,7 @@ const tickNoText={id: 10, subject: "this is teh testing ticket"}
 // //     await db('statuses').truncate()
 // //     await db('users').truncate()
 // // })
-// afterAll(async () => {
+// beforeEach(async () => {
 //     await db.migrate.rollback()
 //     .then(() => db.migrate.latest())
 //     .then(() => db.seed.run())
@@ -40,12 +40,13 @@ describe('tickets router tests', () => {
             return supertest(server)
                 .post('/auth/register')
                 .send(user)
-                .then(resp => {
-                    return supertest(server)
+                .then(resp => {       
+                return supertest(server)
                     .post('/auth/login')
                     .send(user)
                     .then(resp => {
                         let token = resp.body.token
+                        console.log('token', resp.body)
                         return supertest(server)
                         .get('/tickets')
                         .set('authorization', token)
@@ -54,8 +55,8 @@ describe('tickets router tests', () => {
                         })
                     })
                 })
+                }) 
                 
-        })
         it('you can get a list of tickets', () => {
             return supertest(server)
             .post('/auth/register')
@@ -70,7 +71,7 @@ describe('tickets router tests', () => {
                     .get('/tickets')
                     .set('authorization', token)
                     .then(resp => {
-                        expect(resp.body.data).toHaveLength(0)
+                        expect(resp.body.data).toHaveLength(2)
                     })
                 })
             })

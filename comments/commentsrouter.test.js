@@ -3,10 +3,10 @@ const db = require('../data/dbConfig.js');
 const server = require('../server/server.js');
 const user2={id: 2, name: "Test", email: "memail@email.com", password: "password", cohort: "web29", student: true}
 afterAll(async () => {
-    await db('comments').truncate()
-    await db('tickets').truncate()
-    await db('statuses').truncate()
-    await db('users').truncate()
+    // await db('comments').truncate()
+    // await db('tickets').truncate()
+    // await db('statuses').truncate()
+    // await db('users').truncate()
     await supertest(server)
     .post('/auth/register')
     .send(user2)
