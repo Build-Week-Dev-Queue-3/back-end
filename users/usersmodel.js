@@ -31,7 +31,7 @@ function findUsersBy(filter){
        return db('users')
             .where(filter)
 }
-
+// can update only if user id matches
 function updateUser(user){
     return db('users')
             .where({id: user.id})
@@ -39,7 +39,7 @@ function updateUser(user){
 }
 
 
-// can update only if user id matches
+
 module.exports={
     add,
     findById,

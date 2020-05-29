@@ -5,7 +5,7 @@ const user={id: 1, name: "Test", email: "email@email.com", password: "password",
 const user2={id: 2, name: "Test", email: "memail@email.com", password: "password", cohort: "web29", student: true}
 const updateuser2 = {id: 2, name: "Updated Test", email: "memail@email.com", password: "password", cohort: "web29", student: true}
 let token;
-
+// woah buddy
 afterAll(async () => {
     await db('comments').truncate()
     await db('tickets').truncate()

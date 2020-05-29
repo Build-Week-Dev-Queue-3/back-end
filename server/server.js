@@ -30,7 +30,7 @@ server.use('/tickets', TicketsRouter)
 server.use('/tickets', CommentsRouter)
 
 
-//slack??
+//slack
 server.use('/', Slack)
 
 

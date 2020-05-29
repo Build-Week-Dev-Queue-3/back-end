@@ -7,6 +7,8 @@ const Users = require('./usersmodel.js');
 // middleware
 const {verifyToken, passHash} = require('../auth/auth-middleware.js');
 const {idMatch} = require('../server/server-middleware.js');
+
+// ensure every endpoint for users goes through verify token
 router.use(verifyToken);
 
 // endpoints

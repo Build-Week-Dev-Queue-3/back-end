@@ -1,6 +1,7 @@
 const tickets = require('../tickets/tickets-model.js');
 const comments = require('../comments/commentsmodel.js');
 
+// checks to make sure the id matches from the token and the users profile id
 const idMatch = (req, res, next) => {
     const myId = req.jwt.sub
     if(myId == req.params.id){
@@ -13,6 +14,7 @@ const idMatch = (req, res, next) => {
 
 }
 
+// checks to make sure its your ticket youre trying to edit
 const myTicket = (req, res, next) => {
     const myId = req.jwt.sub
     const ticketid = req.params.uid
@@ -25,6 +27,7 @@ const myTicket = (req, res, next) => {
     }
 }
 
+// checks to make sure you are a helper before you can update the status
 const isHelper = (req, res, next) => {
     const helper = req.jwt.helper
     if(helper === true){
@@ -36,6 +39,7 @@ const isHelper = (req, res, next) => {
     }
 }
 
+// gets a full list of all the tickets
 function getAllTickets(){
     const allTickets = []
         tickets.getAll()

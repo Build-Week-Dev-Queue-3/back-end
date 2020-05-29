@@ -5,7 +5,7 @@ function addComment(comment){
     return db('comments')
             .insert(comment, 'id')
 }
-
+// finds all the comments for a ticket
 function findCommentsForTicket(id){
     return db('comments as c')
             .where('c.ticket_id',id)
@@ -15,13 +15,13 @@ function findCommentsForTicket(id){
 
             
 }
-
+// finds a comment by id
 function findcById(id){
     return db('comments')
             .where({id})
             .first()
 }
-
+// lets you delete a comment
 function removeComment(id){
     return findById(id)
             .then(comment => {

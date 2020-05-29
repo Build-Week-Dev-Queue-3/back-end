@@ -1,3 +1,5 @@
+// must test ickets first
+
 const supertest = require('supertest');
 const db = require('../data/dbConfig.js');
 const server = require('../server/server.js');
@@ -24,10 +26,5 @@ afterAll(async () => {
 describe('comments router tests', () => {
     it('can run tests', () => {
         expect(true).toBeTruthy();
-    })
-    describe('you can add a comment', () => {
-        it('takes a comment and posts it to the ticket', () => {
-
-        })
     })
 })

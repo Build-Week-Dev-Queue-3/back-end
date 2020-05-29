@@ -1,3 +1,4 @@
+//uses bcryptjs and jwt token
 // dependency imports
 const router = require('express').Router();
 const bcryptjs = require('bcryptjs');

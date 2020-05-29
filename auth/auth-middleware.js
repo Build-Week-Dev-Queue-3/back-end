@@ -70,6 +70,7 @@ function createToken(user){
   return jwt.sign(payload, secrets.jwtSecret, options)
 }
 
+// verify the token before you can access any information
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization;
   if(token){

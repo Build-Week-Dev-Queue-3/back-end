@@ -116,7 +116,7 @@ router.patch('/:id', isHelper, (req, res) => {
 //             })
 //         })
 // })
-
+    // be able to get a list of all the tickets
 router.get('/', (req, res)=> {
     Tickets.getAll()
     .then(tickets => {
@@ -134,7 +134,7 @@ router.get('/', (req, res)=> {
 //     })
 // })
 
-
+    // be able to get a ticket by the id
 router.get('/:id', (req, res) => {
     Tickets.findById(req.params.id)
     .then(ticket => {

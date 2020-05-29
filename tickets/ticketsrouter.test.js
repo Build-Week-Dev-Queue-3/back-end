@@ -17,6 +17,8 @@ const tickNoText={id: 10, subject: "this is teh testing ticket"}
 //     .then(() => db.migrate.latest())
 //     .then(() => db.seed.run())
 // })
+
+// issues with sqlite and posting tickets
 describe('tickets router tests', () => {
     it('can run tests', () => {
         expect(true).toBeTruthy();

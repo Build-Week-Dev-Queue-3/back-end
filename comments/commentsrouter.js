@@ -7,7 +7,8 @@ const Tickets = require('../tickets/tickets-model.js');
 
 // middleware
 const {verifyToken} = require('../auth/auth-middleware.js');
-const {myComment} = require('../server/server-middleware.js')
+
+// require every endpoint in this router to use verifytoken
 router.use(verifyToken);
 
 // endpoints
@@ -37,7 +38,7 @@ router.post('/:id/comments', verifyToken, (req, res) => {
         })
 
 })
-
+    // able to delete a comment
 router.delete('/:id/comments/:cid', (req, res) => {
     const commentId = req.params.cid
     Comments.findcById(commentId)

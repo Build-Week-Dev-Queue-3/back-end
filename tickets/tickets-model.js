@@ -52,7 +52,7 @@ await db('tickets')
         .insert(ticket, "id")
                             // return findById(id)
 }
-
+// find all tickets based on userId
 function findByUserId(id){
     return db('tickets as t')
             .where('t.user_id', id)
@@ -61,7 +61,7 @@ function findByUserId(id){
             .select('t.subject', 't.ticket_text', 'u.name', 's.status')
 
 }
-
+// allows you to update a ticket
 function updateTicket(id, ticket){
     const ticketed=ticket
     console.log('ticket', ticketed)
@@ -74,6 +74,7 @@ function updateTicket(id, ticket){
             })
 }
 
+// allows you to delete a ticket
 function remove(id){
     return findById(id)
             .then(ticket => {
@@ -88,6 +89,7 @@ function remove(id){
             })
 }
 
+// allows you to update the status of a ticket
 function updateStatus(id, status){
     return db('tickets')
             .where({id})
