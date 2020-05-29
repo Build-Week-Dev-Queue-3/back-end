@@ -46,6 +46,8 @@
 | subject                |  string           | "test"           | required                       |
 | ticket_text            |  string           | "ticket text"    | required                       |
 | user_id                |  number           | 1                | set by token                   |
+| tried                  |  string           | "ive tried"      | optional                       |
+| category               |  string           | "help"           | optional
 | status_id              |  number           | 1                | 4 options, set to 1 by default |
 
 ## COMMENT DATA
